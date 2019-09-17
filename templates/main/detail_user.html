@@ -1,0 +1,39 @@
+{% extends 'layout/base.html' %}
+
+
+{% load bootstrap4 %}
+
+
+{% block content %}
+    <p>Username - {{ boastuser.username }}</p>
+    <p>Count posts - {{ boastuser.posts.count }}</p>
+    <p>Count subscribers - {{ boastuser.boastuser_set.count }}</p>
+    <p>Count subscription - {{ boastuser.friends.count }}</p>
+    {% if boastuser.pk != user.pk %}
+        {% if boastuser not in user.friends.all %}
+            {% buttons %}
+                <a href="{% url 'main:subscription' pk=boastuser.pk %}">
+                    <button type="submit" class="btn btn-primary">
+                        Subscribe
+                    </button>
+                </a>
+            {% endbuttons %}
+        {% else %}
+            {% buttons %}
+                <a href="{% url 'main:subscription' pk=boastuser.pk %}">
+                    <button type="submit" class="btn btn-primary">
+                        Unsubscribe
+                    </button>
+                </a>
+            {% endbuttons %}
+        {% endif %}
+    {% endif %}
+    <p>{{ boastuser.boastuser_set.all }}</p>
+    {% for post in boastuser.posts.all %}
+        <p>{{ post.header }}</p>
+        <p>{{ post.content }}</p>
+        {% for comment in post.comments.all %}
+            <p><b>{{ comment.owner.username }}</b> {{ comment.message }} Created: {{ comment.created_at }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

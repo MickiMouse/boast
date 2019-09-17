@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+
+
+{% load bootstrap4 %}
+
+
+{% block content %}
+    <p>Header - {{ boastpost.header }}</p>
+    <p>Content - {{ boastpost.content }}</p>
+    <p>Created - {{ boastpost.created_at }}</p>
+    <p>Author - {{ boastpost.author.username }}</p>
+    {% for comment in boastpost.comments.all %}
+        <p><b>{{ comment.owner.username }}</b> {{ comment.message }} Created: {{ comment.created_at }}</p>
+    {% endfor %}
+    {% with boastpost as post %}
+        {% include 'main/like.html' %}
+    {% endwith %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit">Comment</button>
+        {% endbuttons %}
+    </form>
+{% endblock %}

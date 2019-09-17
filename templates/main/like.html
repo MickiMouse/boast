@@ -1,0 +1,11 @@
+{% if user in post.likes.all %}
+    <div id="{{ post.pk }}">
+        <button type="submit" onclick="like({{ post.pk }})">Dislike</button>
+        <span>{{ post.likes.count }}</span>
+    </div>
+{% else %}
+    <div id="{{ post.pk }}">
+        <button id="{{ post.pk }}" type="submit" onclick="like({{ post.pk }})">Like</button>
+        <span>{{ post.likes.count }}</span>
+    </div>
+{% endif %}

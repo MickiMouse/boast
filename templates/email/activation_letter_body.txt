@@ -1,0 +1,5 @@
+Dear, {{ user.username }}
+
+Click to activate!
+
+{{ host }}{% url 'boast_auth:register_activate' sign=sign %}

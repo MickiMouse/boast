@@ -1,0 +1,23 @@
+{% extends 'layout/base.html' %}
+
+
+{% block content %}
+    <h2>Dashboard</h2>
+    {% for post in bps %}
+        <div>
+            <a href="{% url 'main:detail_user' pk=post.author.pk %}">
+                <h3>{{ post.author.username }}</h3>
+            </a>
+            <p><a href="{% url 'main:detail_post' pk=post.pk %}">
+                {{ post.header }}</a>
+            </p>
+            <p>{{ post.content }}</p>
+            {% include 'main/like.html' %}
+            <div>
+                {% for comment in post.comments.all %}
+                    <p>{{ comment.owner.username }} {{ comment.message }} Created: {{ comment.created_at }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'layout/base.html' %}
+
+
+{% load bootstrap4 %}
+
+
+{% block content %}
+    <h2>Home (only friends posts )</h2>
+    {% for post in bps %}
+        <h3>
+            <a href="{% url 'main:detail_user' pk=post.author.pk %}">
+                {{ post.author.username }}
+            </a>-
+            <a href="{% url 'main:detail_post' pk=post.pk %}">
+                {{ post.header }}
+            </a>
+        </h3>
+        <small>{{ post.created_at }}</small>
+        <p>{{ post.content }}</p>
+        {% include 'main/like.html' %}
+    {% endfor %}
+{% endblock %}

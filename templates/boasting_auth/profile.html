@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+
+
+{% block content %}
+    <h2>Hello, {{ user.username }}</h2>
+    {% for post in posts %}
+        <p>{{ post.header }}</p>
+        <p>{{ post.content }}</p>
+        {% include 'main/like.html' %}
+    {% endfor %}
+{% endblock %}

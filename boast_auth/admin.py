@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import BoastUser
+
+
+class AdminBoastUser(admin.ModelAdmin):
+    list_display = ('username', 'is_activated',)
+
+
+admin.site.register(BoastUser, AdminBoastUser)

@@ -16,7 +16,7 @@ user_registrated.connect(user_registrated_dispatcher)
 
 class BoastUser(AbstractUser):
     is_activated = models.BooleanField(verbose_name='Activated email?', default=False)
-    friends = models.ManyToManyField('self', symmetrical=False)
+    friends = models.ManyToManyField('self', symmetrical=False, blank=True)
 
     class Meta(AbstractUser.Meta):
         pass

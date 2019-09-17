@@ -11,6 +11,7 @@ class CreatePost(forms.ModelForm):
         model = BoastPost
         fields = ('header',
                   'content',
+                  'image',
                   'author')
         widgets = {'author': forms.HiddenInput()}
 
@@ -23,3 +24,11 @@ class CreateComment(forms.ModelForm):
                   'post')
         widgets = {'owner': forms.HiddenInput(),
                    'post': forms.HiddenInput()}
+
+
+class ChangePost(forms.ModelForm):
+    class Meta:
+        model = BoastPost
+        fields = ('header',
+                  'content',
+                  'image',)

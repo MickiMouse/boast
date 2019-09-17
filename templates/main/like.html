@@ -1,11 +1,18 @@
+{% load static %}
+
+
 {% if user in post.likes.all %}
     <div id="{{ post.pk }}">
-        <button type="submit" onclick="like({{ post.pk }})">Dislike</button>
+        <a onclick="like({{ post.pk }})" style="cursor: pointer">
+            <img src="{% static 'main/svg/like_red.svg' %}" style="width: 1vw; height: 1vw;" alt="dislike">
+        </a>
         <span>{{ post.likes.count }}</span>
     </div>
 {% else %}
     <div id="{{ post.pk }}">
-        <button id="{{ post.pk }}" type="submit" onclick="like({{ post.pk }})">Like</button>
+        <a onclick="like({{ post.pk }})" style="cursor: pointer">
+            <img src="{% static 'main/svg/like.svg' %}" style="width: 1vw; height: 1vw;" alt="dislike">
+        </a>
         <span>{{ post.likes.count }}</span>
     </div>
 {% endif %}

@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.template.response import TemplateResponse
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 
 from boast_auth.models import BoastUser
 from .models import BoastPost
-from .forms import CreatePost, CreateComment
+from .forms import CreatePost, CreateComment, ChangePost
 
 
 @login_required
@@ -26,7 +27,8 @@ def home(request):
 @login_required
 def boast_create(request):
     if request.method == 'POST':
-        form = CreatePost(request.POST)
+        form = CreatePost(request.POST, request.FILES)
+        print(request.FILES)
         if form.is_valid():
             form.save()
             return redirect('boast_auth:profile')
@@ -86,3 +88,14 @@ def like_post(request):
             post.likes.remove(request.user)
         post.save()
     return TemplateResponse(request, 'main/like.html', {'post': post})
+
+
+class PostChangeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = BoastPost
+    form_class = ChangePost
+    template_name = 'main/change_post.html'
+    queryset = BoastPost.objects.all()
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user

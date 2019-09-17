@@ -1,11 +1,23 @@
 {% extends 'layout/base.html' %}
 
 
+{% load thumbnail %}
+
+
 {% block content %}
-    <h2>Hello, {{ user.username }}</h2>
+    {% url 'main:detail_post' pk=post.pk as url %}
+    <h2>{{ user.username }}</h2>
     {% for post in posts %}
-        <p>{{ post.header }}</p>
-        <p>{{ post.content }}</p>
+        <div><a href="{{ url }}">{{ post.header }}</a></div>
+        <div>
+            <a href="{{ url }}">
+                {% if post.image %}
+                    <img src="{% thumbnail post.image 'default' %}" alt="">
+                {% endif %}
+                <img src="{% thumbnail post.image 'default' %}" alt="">
+            </a>
+        </div>
+        <div>{{ post.content }}</div>
         {% include 'main/like.html' %}
     {% endfor %}
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'layout/base.html' %}
+
+
+{% load bootstrap4 %}
+
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form show_label=False %}
+        {% buttons submit='Change' %}{% endbuttons %}
+    </form>
+{% endblock %}

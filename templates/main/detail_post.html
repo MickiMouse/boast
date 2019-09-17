@@ -5,7 +5,14 @@
 
 
 {% block content %}
-    <p>Header - {{ boastpost.header }}</p>
+    {% if boastpost.author.pk == user.pk %}
+        <p>
+            Header -
+            <a href="{% url 'main:change_post' pk=boastpost.pk %}">{{ boastpost.header }}</a>
+        </p>
+    {% else %}
+        <p>Header - {{ boastpost.header }}</p>
+    {% endif %}
     <p>Content - {{ boastpost.content }}</p>
     <p>Created - {{ boastpost.created_at }}</p>
     <p>Author - {{ boastpost.author.username }}</p>

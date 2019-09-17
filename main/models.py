@@ -27,3 +27,7 @@ class Comment(models.Model):
                              related_name='comments')
     created_at = models.DateTimeField(verbose_name='Created', auto_now_add=True,
                                       db_index=True)
+
+
+class Category(models.Model):
+    title = models.CharField(verbose_name='Title', max_length=20, default='...')

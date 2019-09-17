@@ -1,12 +1,16 @@
 {% extends 'layout/base.html' %}
 
 
+{% load bootstrap4 %}
+
+
 {% block content %}
-    <h2>Sign in</h2>
-    <form action="" method="post">
+    <form method="post" class="form shadow-sm my-5 p-3">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
+        {% bootstrap_form form show_label=False %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">Login</button>
+        {% endbuttons %}
+        <a href="{% url 'boast_auth:password_reset' %}">Forgot password?</a>
     </form>
-    <p><a href="{% url 'boast_auth:password_reset' %}">Forgot password</a></p>
 {% endblock %}

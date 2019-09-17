@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.template.response import TemplateResponse
@@ -28,7 +29,6 @@ def home(request):
 def boast_create(request):
     if request.method == 'POST':
         form = CreatePost(request.POST, request.FILES)
-        print(request.FILES)
         if form.is_valid():
             form.save()
             return redirect('boast_auth:profile')
@@ -99,3 +99,12 @@ class PostChangeView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         obj = self.get_object()
         return obj.author == self.request.user
+
+
+@login_required
+def delete_post(request, pk):
+    bp = get_object_or_404(BoastPost, pk=pk)
+    if request.method == 'POST':
+        bp.delete()
+        messages.add_message(request, messages.SUCCESS, 'Post has been deleted')
+        return redirect('boast_auth:profile')

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.shortcuts import reverse
+from easy_thumbnails.files import get_thumbnailer
 
 from .utilities import get_timestamp_path
 
@@ -13,7 +14,7 @@ class BoastPost(models.Model):
     header = models.CharField(verbose_name='Header', max_length=100, default='I brag about...')
     content = models.TextField(verbose_name='Text')
     likes = models.ManyToManyField('boast_auth.BoastUser', related_name='likes', blank=True)
-    image = models.ImageField(verbose_name='Image', upload_to=get_timestamp_path, blank=True)
+    image = models.ImageField(verbose_name='Image', upload_to=get_timestamp_path, blank=True, null=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -22,8 +23,8 @@ class BoastPost(models.Model):
         return reverse('main:detail_post', args=[self.pk])
 
     def delete(self, *args, **kwargs):
-        for image in self.images.all():
-            image.delete()
+        thumb = get_thumbnailer(self.image)
+        thumb.delete_thumbnails()
         super().delete(*args, **kwargs)
 
 
@@ -35,9 +36,3 @@ class Comment(models.Model):
                              related_name='comments')
     created_at = models.DateTimeField(verbose_name='Created', auto_now_add=True,
                                       db_index=True)
-
-
-class AdditionalImage(models.Model):
-    bp = models.ForeignKey(BoastPost, on_delete=models.CASCADE,
-                           related_name='images')
-    image = models.ImageField(verbose_name='Image', upload_to=get_timestamp_path)

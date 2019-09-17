@@ -35,3 +35,10 @@ class RegisterUserForm(forms.ModelForm):
         model = BoastUser
         fields = ('username', 'email', 'password', 'password2',
                   'first_name', 'last_name')
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = BoastUser
+        fields = ('username', 'email', 'first_name',
+                  'last_name', 'avatar')

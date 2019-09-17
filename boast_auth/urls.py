@@ -9,6 +9,7 @@ from .views import (
     BoastPasswordResetConfirmView,
     activate,
     profile,
+    BoastEditProfileView,
 )
 
 app_name = 'boast_auth'
@@ -22,5 +23,6 @@ urlpatterns = [
     path('password-reset/', BoastPasswordResetView.as_view(), name='password_reset'),
     path('login/', BoastLoginView.as_view(), name='login'),
     path('logout/', BoastLogoutView.as_view(), name='logout'),
+    path('profile/edit/<int:pk>/', BoastEditProfileView.as_view(), name='edit_profile'),
     path('profile/', profile, name='profile'),
 ]

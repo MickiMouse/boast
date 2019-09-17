@@ -3,13 +3,14 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.views import \
     (LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView)
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import TemplateView
 
 from .models import BoastUser
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, EditProfileForm
 from .utilities import signer
 
 
@@ -71,3 +72,11 @@ class BoastPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmVie
     post_reset_login = True
     success_url = reverse_lazy('boast_auth:profile')
     success_message = 'Password has been changed successful'
+
+
+class BoastEditProfileView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = BoastUser
+    form_class = EditProfileForm
+    template_name = 'boasting_auth/edit_profile.html'
+    success_message = 'Successful'
+    success_url = reverse_lazy('boast_auth:profile')

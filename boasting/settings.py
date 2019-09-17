@@ -147,9 +147,12 @@ MEDIA_URL = '/media/'
 THUMBNAIL_ALIASES = {
     '': {
         'default': {
-            'size': (96, 96),
+            'size': (100, 200),
             'crop': 'scale',
         },
+        'profile': {
+            'size': (400, 400)
+        }
     },
 }
 

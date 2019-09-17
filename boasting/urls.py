@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include('main.urls')),
 ]
 
+
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>/', never_cache(serve)))
     urlpatterns += static(settings.MEDIA_URL,

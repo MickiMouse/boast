@@ -5,12 +5,9 @@
 
 
 {% block content %}
-    <h2>Create post</h2>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Create!</button>
-        {% endbuttons %}
+        {% bootstrap_form form show_label=False %}
+        {% buttons submit='Save' %}{% endbuttons %}
     </form>
 {% endblock %}

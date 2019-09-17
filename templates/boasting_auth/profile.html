@@ -5,16 +5,14 @@
 
 
 {% block content %}
-    {% url 'main:detail_post' pk=post.pk as url %}
     <h2>{{ user.username }}</h2>
     {% for post in posts %}
-        <div><a href="{{ url }}">{{ post.header }}</a></div>
+        <div><a href="{% url 'main:detail_post' pk=post.pk %}">{{ post.header }}</a></div>
         <div>
-            <a href="{{ url }}">
+            <a href="{% url 'main:detail_post' pk=post.pk %}">
                 {% if post.image %}
                     <img src="{% thumbnail post.image 'default' %}" alt="">
                 {% endif %}
-                <img src="{% thumbnail post.image 'default' %}" alt="">
             </a>
         </div>
         <div>{{ post.content }}</div>

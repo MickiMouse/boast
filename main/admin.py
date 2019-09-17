@@ -4,7 +4,7 @@ from .models import BoastPost, Comment
 
 
 class AdminBoastPost(admin.ModelAdmin):
-    list_display = ('author', 'created_at', 'like_count')
+    list_display = ('author', 'created_at', 'like_count', 'image')
 
     def like_count(self, obj):
         return obj.likes.count()

@@ -31,4 +31,4 @@ class ChangePost(forms.ModelForm):
         model = BoastPost
         fields = ('header',
                   'content',
-                  'image',)
+                  'image')
